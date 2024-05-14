@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+---
+#-- The below configuration is enabled **only** when activating the 'local' profile for Spring Boot
+spring:
+  datasource:
+    username: 8208701eb7ed
+    password: 5498832d4ebeeb970b94e307b1df
+    url: jdbc:postgresql://localhost:63306/zZGQjqoDLBeZ
+  config:
+    activate:
+      on-profile:
+        - local
+
+#-- The following lines are required to run your application locally. Please refer to this documentation for further information:
+#-- https://github.com/SAP/cloud-security-xsuaa-integration/tree/main/spring-security#local-setup-fails-with-application-failed-to-start
+#sap:
+#  security:
+#    services:
+#      xsuaa:
+#        xsappname: my-xsuaa!t280733"
+#        uaadomain: localhost
+#        clientid: sb-my-xsuaa!t280733
+#        clientsecret: +Q1+1lgnmMIylQGFl6A24lKWQek=
+#        url: http://localhost
+

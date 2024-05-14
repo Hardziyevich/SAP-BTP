@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: NAME
+      changes:
+        - createTable:
+            tableName: subscribers
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tenant_schema
+                  type: VARCHAR(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp without time zone
+              - column:
+                  name: updated
+                  type: timestamp without time zone
+              - column:
+                  name: state
+                  type: VARCHAR(100)

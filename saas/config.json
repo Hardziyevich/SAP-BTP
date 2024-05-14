@@ -1,0 +1,9 @@
+{
+  "xsappname":"onboarding-87eb7c3ctrial",
+  "appUrls": {
+    "onSubscription" : "https://onboarding-accountable-sable-cv.cfapps.us10-001.hana.ondemand.com/callback/v1.0/tenants/{tenantId}"
+  },
+  "displayName" : "Onboarding Application",
+  "description" : "My multitenant biz app",
+  "category" : "Test"
+}

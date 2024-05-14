@@ -1,0 +1,49 @@
+{
+  "xsappname": "onboarding-87eb7c3ctrial",
+  "tenant-mode": "shared",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Display",
+      "description": "display"
+    },
+    {
+      "name": "$XSAPPNAME.Delete",
+      "description": "delete"
+    },
+    {
+      "name":"$XSAPPNAME.Callback",
+      "description":"With this scope set, the callbacks for subscribe, unsubscribe and getDependencies can be called.",
+      "grant-as-authority-to-apps":[
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Required to view things in your solution",
+      "scope-references"     : [
+        "$XSAPPNAME.Display"
+      ]
+    },
+    {
+      "name": "Remove",
+      "description": "",
+      "scope-references"     : [
+        "$XSAPPNAME.Delete"
+      ]
+    },
+    {
+      "name": "Callback",
+      "description": "",
+      "scope-references"     : [
+        "$XSAPPNAME.Callback"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://*.cfapps.us10-001.hana.ondemand.com/**"
+    ]
+  }
+}

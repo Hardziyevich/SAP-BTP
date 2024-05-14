@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    username: ${vcap.services.my_db.credentials.username}
+    password: ${vcap.services.my_db.credentials.password}
+    url: jdbc:postgresql://${vcap.services.my_db.credentials.hostname}:${vcap.services.my_db.credentials.port}/${vcap.services.my_db.credentials.dbname}
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+configuration:
+  approuter: '-onboarding-approuter-87eb7c3ctrial.cfapps.us10-001.hana.ondemand.com'
+  liquibase: classpath:db/changelog/tenants/db.changelog-master.yaml

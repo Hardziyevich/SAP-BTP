@@ -1,0 +1,37 @@
+---
+applications:
+
+  - name: onboarding
+    memory: 1500M
+    timeout: 300
+    random-route: true
+    path: application/target/onboarding-application.jar
+    buildpacks:
+      - sap_java_buildpack
+    env:
+      TARGET_RUNTIME: main
+      SPRING_PROFILES_ACTIVE: 'cloud'
+      JBP_CONFIG_SAPJVM_MEMORY_SIZES: 'metaspace:128m..'
+      JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ use_offline_repository: false, version: 17.0.5 }'
+    services:
+      - my_db
+      - onboarding_xsuaa
+      - logging
+  - name: onboarding-approuter
+    routes:
+      - route: onboarding-approuter-87eb7c3ctrial.cfapps.us10-001.hana.ondemand.com
+    path: security/approuter
+    memory: 256M
+    buildpack: nodejs_buildpack
+    env:
+      TENANT_HOST_PATTERN: '^(.*)-onboarding-approuter-(.*).cfapps.us10-001.hana.ondemand.com'
+      destinations: '[
+        {
+          "name":"backend-onboarding", 
+          "url" :"https://onboarding-accountable-sable-cv.cfapps.us10-001.hana.ondemand.com", 
+          "forwardAuthToken": true
+        }
+      ]'
+    services:
+      - onboarding_xsuaa
