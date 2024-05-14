@@ -1,6 +1,7 @@
 package pl.onbording.sap.infrastructure.hibernate;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.initialization.qual.Initialized;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.UnknownKeyFor;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ConnectionProvider implements MultiTenantConnectionProvider, HibernatePropertiesCustomizer {
@@ -37,6 +39,7 @@ public class ConnectionProvider implements MultiTenantConnectionProvider, Hibern
     public Connection getConnection(String tenantId) throws SQLException {
         Connection connection = dataSource.getConnection();
         connection.setSchema(tenatSchemaResolver.apply(tenantId));
+        log.info("Current schema: {}", connection.getSchema());
         return connection;
     }
 
