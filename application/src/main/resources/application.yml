@@ -5,9 +5,9 @@ server:
 #-- The below configuration is enabled **only** when activating the 'local' profile for Spring Boot
 spring:
   datasource:
-    username: 8208701eb7ed
-    password: 5498832d4ebeeb970b94e307b1df
-    url: jdbc:postgresql://localhost:63306/zZGQjqoDLBeZ
+    username:
+    password:
+    url:
   config:
     activate:
       on-profile:
@@ -19,9 +19,9 @@ spring:
 #  security:
 #    services:
 #      xsuaa:
-#        xsappname: my-xsuaa!t280733"
-#        uaadomain: localhost
-#        clientid: sb-my-xsuaa!t280733
-#        clientsecret: +Q1+1lgnmMIylQGFl6A24lKWQek=
-#        url: http://localhost
+#        xsappname:
+#        uaadomain:
+#        clientid:
+#        clientsecret:
+#        url:
 
