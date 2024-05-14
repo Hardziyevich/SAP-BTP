@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,9 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity(debug = true) // TODO "debug" may include sensitive information. Do not use in a production system!
@@ -41,7 +40,8 @@ public class SecurityConfiguration {
 
             .authorizeHttpRequests(registry -> registry
                     .requestMatchers("/callback/v1.0/tenants/").hasAuthority("Callback")
-                    .requestMatchers("/hello").hasAuthority("Display") // optionally check for specific scopes
+                    .requestMatchers("/hello").hasAuthority("Display")
+                    .requestMatchers(HttpMethod.GET, "users").hasAuthority("Display")
                     .requestMatchers("/**").authenticated()
                     .anyRequest().denyAll())
 
