@@ -18,3 +18,13 @@ databaseChangeLog:
                   type: VARCHAR(100)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: pavel.gordievich
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: created
+                  type: timestamp without time zone

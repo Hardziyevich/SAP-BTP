@@ -29,8 +29,8 @@ public class SubscriberService {
                 .ifPresent(subscriber -> subscriber.setState(State.UNSUBSCRIBED));
     }
 
-    public List<Subscriber> findAll() {
-        return subscriberRepository.findAll();
+    public List<Subscriber> findActiveSubscribers() {
+        return subscriberRepository.findAllByState(State.SUBSCRIBED);
     }
 
     public void create(String tenantSchema) {
