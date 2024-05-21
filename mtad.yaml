@@ -1,0 +1,80 @@
+_schema-version: '3.1'
+ID: onboarding
+version: 1.0.0-SNAPSHOT
+
+modules:
+  - name: backend
+    type: java
+    path: application/target/onboarding-application.jar
+    properties:
+      CONFIGURATION_APPROUTER: '-~{approuter-api/approuter_uri}'
+      SPRING_PROFILES_ACTIVE: 'cloud'
+      JBP_CONFIG_SAPJVM_MEMORY_SIZES: 'metaspace:128m..'
+      JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
+      JBP_CONFIG_SAP_MACHINE_JRE: '{ use_offline_repository: false, version: 17.0.5 }'
+    parameters:
+      memory: 1500M
+    provides:
+      - name: backend-api
+        properties:
+          backend-url: ${default-url}
+    requires:
+      - name: xsuaa
+      - name: my_db
+      - name: logging
+      - name: saas
+      - name: approuter-api
+
+  - name: approuter
+    type: nodejs
+    path: security/approuter
+    parameters:
+      memory: 512M
+      keep-existing-routes: true
+      routes:
+        - route: "${host}.${domain}"
+    provides:
+      - name: approuter-api
+        properties:
+          approuter_uri: ${default-uri}
+    requires:
+      - name: backend-api
+        group: destinations
+        properties:
+          name: backend-onboarding
+          url: ~{backend-url}
+          forwardAuthToken: true
+      - name: xsuaa
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-${host}.${domain}"
+
+resources:
+  - name: xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      shared: true
+      path: security/xs-security.json
+      config:
+        xsappname: dev-approuter
+
+  - name: saas
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: backend-api
+    parameters:
+      service: saas-registry
+      service-plan: application
+      path: saas/config.json
+      config:
+        xsappname: dev-approuter
+        appUrls:
+          onSubscription: ~{backend-api/backend-url}/callback/v1.0/tenants/{tenantId}
+
+  - name: my_db
+    type: org.cloudfoundry.existing-service
+
+  - name: logging
+    type: org.cloudfoundry.existing-service
+

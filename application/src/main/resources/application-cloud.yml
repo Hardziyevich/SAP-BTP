@@ -7,5 +7,4 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
 configuration:
-  approuter: '-onboarding-approuter-87eb7c3ctrial.cfapps.us10-001.hana.ondemand.com'
   liquibase: classpath:db/changelog/tenants/db.changelog-master.yaml
